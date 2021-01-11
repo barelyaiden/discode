@@ -1,0 +1,106 @@
+{
+  "name": "discode",
+  "version": "1.0.0",
+  "publisher": "evenaven",
+  "engines": {
+    "vscode": "^1.52.0"
+  },
+  "displayName": "Discode",
+  "description": "A Visual Studio Code extension that allows you to share code to Discord with webhooks.",
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "discord",
+    "code",
+    "discode"
+  ],
+  "galleryBanner": {
+    "color": "#7289DA",
+    "theme": "dark"
+  },
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "discode.set",
+        "title": "Set A Webhook",
+        "category": "Discode"
+      },
+      {
+        "command": "discode.share",
+        "title": "Share Code To Discord",
+        "category": "Discode"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "discode.share",
+          "when": "editorHasSelection"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "editorHasSelection",
+          "command": "discode.share",
+          "group": "z_commands"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Discode",
+      "properties": {
+        "discode.webhook": {
+          "type": "string",
+          "description": "The webhook used to send the code to.\nMake sure to input a valid Discord webhook link."
+        },
+        "discode.name": {
+          "type": "string",
+          "description": "The name that appears in the embed that gets sent.\nMake sure it's no longer than 32 characters."
+        },
+        "discode.avatar": {
+          "type": "string",
+          "description": "The avatar that appears in the embed that gets sent.\nMake sure the image is of a PNG, JPEG or GIF format."
+        }
+      }
+    }
+  },
+  "activationEvents": [
+    "onCommand:discode.set",
+    "onCommand:discode.share"
+  ],
+  "dependencies": {
+    "discord-webhook-node": "^1.1.8"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^8.0.4",
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.52.0",
+    "@typescript-eslint/eslint-plugin": "^4.9.0",
+    "@typescript-eslint/parser": "^4.9.0",
+    "eslint": "^7.15.0",
+    "glob": "^7.1.6",
+    "mocha": "^8.1.3",
+    "typescript": "^4.1.2",
+    "vscode-test": "^1.4.1"
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "icon": "images/icon.png",
+  "bugs": {
+    "url": "https://github.com/evenaven/discode/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evenaven/discode.git"
+  },
+  "homepage": "https://github.com/evenaven/discode/blob/master/README.md"
+}
