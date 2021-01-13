@@ -1,6 +1,5 @@
 node_modules/
-CHANGELOG.md
+out/
 package-lock.json
 README.md
-To-Do List.txt
 vsc-extension-quickstart.md
