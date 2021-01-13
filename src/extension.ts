@@ -132,7 +132,7 @@ export async function activate(context: vscode.ExtensionContext) {
 						});
 
 						// Creates an embed that gets sent to the Discord webhook.
-						const embed = new MessageBuilder()
+						let embed = new MessageBuilder()
 							// Sets the embed's current timestamp.
 							.setTimestamp()
 							// Sets the embed's color.
@@ -157,6 +157,7 @@ export async function activate(context: vscode.ExtensionContext) {
 						// Alerts the user that the code was successfully shared.
 						await vscode.window.showInformationMessage('Successfully shared code to Discord!');
 					} catch (error) {
+						console.log(error);
 						// Alerts the user that the Discode configuration is not valid.
 						await vscode.window.showErrorMessage('The webhook configuration is invalid! Please check if everything is correct in the settings or use the "Set a Webhook" command through the Command Palette.');
 					}
@@ -164,7 +165,7 @@ export async function activate(context: vscode.ExtensionContext) {
 					// Tries to execute the code below and catches an error if one occurs.
 					try {
 						// Creates an embed that gets sent to the Discord webhook.
-						const embed = new MessageBuilder()
+						let embed = new MessageBuilder()
 							// Sets the embed's current timestamp.
 							.setTimestamp()
 							// Sets the embed's color.
@@ -189,6 +190,7 @@ export async function activate(context: vscode.ExtensionContext) {
 						// Alerts the user that the code was successfully shared.
 						await vscode.window.showInformationMessage('Successfully shared code to Discord!');
 					} catch (error) {
+						console.log(error);
 						// Alerts the user that the Discode configuration is not valid.
 						await vscode.window.showErrorMessage('The webhook configuration is invalid! Please check if everything is correct in the settings or use the "Set a Webhook" command through the Command Palette.');
 					}

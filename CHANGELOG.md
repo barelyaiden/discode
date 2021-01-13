@@ -1,3 +1,7 @@
+## Release 1.1.1
+
+- Hotfix for Release 1.1.0 throwing an error when attempting to share code.
+
 ## Release 1.1.0
 
 - "Set a Webhook" command's input boxes don't disappear now if window focus is lost.

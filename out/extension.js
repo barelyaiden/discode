@@ -130,7 +130,7 @@ function activate(context) {
                                 server: 'https://hastebin.com'
                             });
                             // Creates an embed that gets sent to the Discord webhook.
-                            const embed = new discord_webhook_node_1.MessageBuilder()
+                            let embed = new discord_webhook_node_1.MessageBuilder()
                                 // Sets the embed's current timestamp.
                                 .setTimestamp()
                                 // Sets the embed's color.
@@ -154,6 +154,7 @@ function activate(context) {
                             yield vscode.window.showInformationMessage('Successfully shared code to Discord!');
                         }
                         catch (error) {
+                            console.log(error);
                             // Alerts the user that the Discode configuration is not valid.
                             yield vscode.window.showErrorMessage('The webhook configuration is invalid! Please check if everything is correct in the settings or use the "Set a Webhook" command through the Command Palette.');
                         }
@@ -162,7 +163,7 @@ function activate(context) {
                         // Tries to execute the code below and catches an error if one occurs.
                         try {
                             // Creates an embed that gets sent to the Discord webhook.
-                            const embed = new discord_webhook_node_1.MessageBuilder()
+                            let embed = new discord_webhook_node_1.MessageBuilder()
                                 // Sets the embed's current timestamp.
                                 .setTimestamp()
                                 // Sets the embed's color.
@@ -186,6 +187,7 @@ function activate(context) {
                             yield vscode.window.showInformationMessage('Successfully shared code to Discord!');
                         }
                         catch (error) {
+                            console.log(error);
                             // Alerts the user that the Discode configuration is not valid.
                             yield vscode.window.showErrorMessage('The webhook configuration is invalid! Please check if everything is correct in the settings or use the "Set a Webhook" command through the Command Palette.');
                         }
