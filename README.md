@@ -29,9 +29,15 @@ This extension contributes the following settings:
 
 ## Known Issues
 
-* None so far! If you encounter any issues please file an issue in the GitHub repository.
+* Code that exceeds Discord's maximum message length limit cannot be shared.
 
 ## Release Notes
+
+### Release 1.1.2
+
+* Removed Hastebin share feature due to outdated and incompatible modules.
+* Upped long code length limit to Discord's maximum message length limit (2000 characters).
+* Embed now shows the file name above the code.
 
 ### Release 1.1.1
 

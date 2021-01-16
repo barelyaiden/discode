@@ -1,12 +1,10 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-// The module 'discord-webhook=node' allows compatibility with Discord webhooks.
+// The module 'discord-webhook-node' allows compatibility with Discord webhooks.
 // The module 'eol' allows additional functionality with line endings of strings.
-// The module 'hastebin' allows the functionality of creating Hastebin links.
 import * as vscode from 'vscode';
 import { Webhook, MessageBuilder } from 'discord-webhook-node';
 import * as eol from 'eol';
-import * as hastebin from 'hastebin';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -119,48 +117,9 @@ export async function activate(context: vscode.ExtensionContext) {
 				});
 				
 				// Checks if the code is too long to send in an embed.
-				if (`${code}`.length > 1024) {
-					// Tries to execute the code below and catches an error if one occurs.
-					try {
-						// Creates a hastebin link of the code.
-						const haste = await hastebin.createPaste(`${code.join('\n')}`, {
-							// Hastebin link options.
-							raw: false,
-							// @ts-ignore
-							contentType: document.languageId,
-							server: 'https://hastebin.com'
-						});
-
-						// Creates an embed that gets sent to the Discord webhook.
-						let embed = new MessageBuilder()
-							// Sets the embed's current timestamp.
-							.setTimestamp()
-							// Sets the embed's color.
-							.setColor(0x27b5f4)
-							// Sets the embed's description.
-							.setDescription(`Check out the code here: [Hastebin](${haste})`)
-							// Sets the embed's footer.
-							.setFooter('Sent with Discode from Visual Studio Code', 'https://cdn.discordapp.com/attachments/798580610686779392/798580822641868870/embedIcon.png');
-
-						// Checks if there's no avatar in the configuration.
-						if (!vscode.workspace.getConfiguration('discode').get('avatar')) {
-							// Sets the embed's author.
-							embed.setAuthor(`${vscode.workspace.getConfiguration('discode').get('name')}`);
-						} else {
-							// Sets the embed's author.
-							embed.setAuthor(`${vscode.workspace.getConfiguration('discode').get('name')}`, `${vscode.workspace.getConfiguration('discode').get('avatar')}`);
-						}
-
-						// Sends a request to the webhook.
-						await hook.send(embed);
-
-						// Alerts the user that the code was successfully shared.
-						await vscode.window.showInformationMessage('Successfully shared code to Discord!');
-					} catch (error) {
-						console.log(error);
-						// Alerts the user that the Discode configuration is not valid.
-						await vscode.window.showErrorMessage('The webhook configuration is invalid! Please check if everything is correct in the settings or use the "Set a Webhook" command through the Command Palette.');
-					}
+				if (`${code}`.length > 2000) {
+					// Alerts the user that the selected code is too long to send.
+					await vscode.window.showErrorMessage('Cannot share code longer than 2000 characters!');
 				} else {
 					// Tries to execute the code below and catches an error if one occurs.
 					try {
@@ -171,7 +130,7 @@ export async function activate(context: vscode.ExtensionContext) {
 							// Sets the embed's color.
 							.setColor(0x27b5f4)
 							// Sets the embed's description.
-							.setDescription(`\`\`\`${document.languageId}\n${code.join('\n')}\`\`\``)
+							.setDescription(`**${document.fileName.substring(document.fileName.lastIndexOf('\\') + 1)}**\`\`\`${document.languageId}\n${code.join('\n')}\`\`\``)
 							// Sets the embed's footer.
 							.setFooter('Sent with Discode from Visual Studio Code', 'https://cdn.discordapp.com/attachments/798580610686779392/798580822641868870/embedIcon.png');
 			

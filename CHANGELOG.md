@@ -1,3 +1,9 @@
+## Release 1.1.2
+
+- Removed Hastebin share feature due to outdated and incompatible modules.
+- Upped long code length limit to Discord's maximum message length limit (2000 characters).
+- Embed now shows the file name above the code.
+
 ## Release 1.1.1
 
 - Hotfix for Release 1.1.0 throwing an error when attempting to share code.
