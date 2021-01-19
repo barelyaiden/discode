@@ -38,7 +38,7 @@ function activate(context) {
                 placeHolder: 'Input a valid Discord webhook link.',
                 // Function that checks if the input is a valid Discord webhook link.
                 validateInput: text => {
-                    return text.startsWith('https://discordapp.com/api/webhooks/') || text.startsWith('https://discord.com/api/webhooks/') ? null : 'That is not a valid Discord webhook link.';
+                    return text.startsWith('https://discordapp.com/api/webhooks/') || text.startsWith('https://discord.com/api/webhooks/') || text.startsWith('https://canary.discordapp.com/api/webhooks/') || text.startsWith('https://canary.discord.com/api/webhooks/') || text.startsWith('https://ptb.discordapp.com/api/webhooks/') || text.startsWith('https://ptb.discord.com/api/webhooks/') ? null : 'That is not a valid Discord webhook link.';
                 }
             });
             // Sends an input box to retrieve the name that should appear in the embed that gets sent.
@@ -117,8 +117,8 @@ function activate(context) {
                     });
                     // Checks if the code is too long to send in an embed.
                     if (`${code}`.length > 2000) {
-                        // Alerts the user that the selected code is too long to send.
-                        yield vscode.window.showErrorMessage('Cannot share code longer than 2000 characters!');
+                        // Alerts the user that the code is too long to share.
+                        yield vscode.window.showErrorMessage('Cannot share code longer than 2000 characters! Do not this is a temporary issue and will be changed in a future update.');
                     }
                     else {
                         // Tries to execute the code below and catches an error if one occurs.

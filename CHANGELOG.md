@@ -1,3 +1,8 @@
+## Release 1.1.3
+
+- Added support for Discord Canary and PTB webhook links.
+- Added "Community Projects" section in the README.md file.
+
 ## Release 1.1.2
 
 - Removed Hastebin share feature due to outdated and incompatible modules.

@@ -4,6 +4,13 @@ A Visual Studio Code extension that allows you to share code to Discord with web
 
 *[Make sure to join the official Discode Discord server here!](https://discord.gg/Cm3ADqfPpp)*
 
+# Community Projects
+
+[Discode Helper](https://discord.com/oauth2/authorize?client_id=800675047480098826&scope=bot&permissions=536955928)
+by CherryPAVoice.
+
+If you would like to submit a project, please feel free to join the [official Discode Discord server](https://discord.gg/Cm3ADqfPpp) and DM aven.
+
 ## Usage
 
 After installing the extension, open up the Command Palette and under "Discode" use the "Set a Webhook" command.
@@ -32,6 +39,11 @@ This extension contributes the following settings:
 * Code that exceeds Discord's maximum message length limit cannot be shared.
 
 ## Release Notes
+
+### Release 1.1.3
+
+* Added support for Discord Canary and PTB webhook links.
+* Added "Community Projects" section in the README.md file.
 
 ### Release 1.1.2
 
