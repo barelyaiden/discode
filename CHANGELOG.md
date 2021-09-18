@@ -1,3 +1,8 @@
+## Release 2.0.0
+
+- Major code and file restructuring.
+- Re-added support for generating Hastebin links for longer code.
+
 ## Release 1.1.3
 
 - Added support for Discord Canary and PTB webhook links.

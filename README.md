@@ -6,10 +6,10 @@ A Visual Studio Code extension that allows you to share code to Discord with web
 
 # Community Projects
 
-[Discode Helper](https://discord.com/oauth2/authorize?client_id=800675047480098826&scope=bot&permissions=536955928)
+[Discode Helper](https://discord.com/oauth2/authorize?client_id=800675047480098826&scope=bot%20applications.commands&permissions=537259088)
 by CherryPAVoice.
 
-If you would like to submit a project, please feel free to join the [official Discode Discord server](https://discord.gg/Cm3ADqfPpp) and DM aven.
+If you would like to submit a project, please feel free to join the [official Discode Discord server](https://discord.gg/Cm3ADqfPpp) and message barelyaiden.
 
 ## Usage
 
@@ -36,9 +36,14 @@ This extension contributes the following settings:
 
 ## Known Issues
 
-* Code that exceeds Discord's maximum message length limit cannot be shared.
+* None so far!
 
 ## Release Notes
+
+### Release 2.0.0
+
+* Major code and file restructuring.
+* Re-added support for generating Hastebin links for longer code.
 
 ### Release 1.1.3
 

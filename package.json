@@ -1,12 +1,17 @@
 {
   "name": "discode",
-  "version": "1.1.3",
-  "publisher": "evenaven",
-  "engines": {
-    "vscode": "^1.52.0"
-  },
   "displayName": "Discode",
   "description": "A Visual Studio Code extension that allows you to share code to Discord with webhooks.",
+  "homepage": "https://github.com/barelyaiden/discode/blob/master/README.md",
+  "icon": "images/icon.png",
+  "publisher": "barelyaiden",
+  "version": "2.0.0",
+  "bugs": {
+    "url": "https://github.com/barelyaiden/discode/issues"
+  },
+  "engines": {
+    "vscode": "^1.60.0"
+  },
   "categories": [
     "Other"
   ],
@@ -14,6 +19,10 @@
     "discord",
     "code",
     "discode"
+  ],
+  "activationEvents": [
+    "onCommand:discode.set",
+    "onCommand:discode.share"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -62,27 +71,6 @@
       }
     }
   },
-  "activationEvents": [
-    "onCommand:discode.set",
-    "onCommand:discode.share"
-  ],
-  "dependencies": {
-    "discord-webhook-node": "^1.1.8",
-    "eol": "^0.9.1"
-  },
-  "devDependencies": {
-    "@types/glob": "^7.1.3",
-    "@types/mocha": "^8.0.4",
-    "@types/node": "^12.11.7",
-    "@types/vscode": "^1.52.0",
-    "@typescript-eslint/eslint-plugin": "^4.9.0",
-    "@typescript-eslint/parser": "^4.9.0",
-    "eslint": "^7.15.0",
-    "glob": "^7.1.6",
-    "mocha": "^8.1.3",
-    "typescript": "^4.1.2",
-    "vscode-test": "^1.4.1"
-  },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
@@ -91,13 +79,26 @@
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js"
   },
-  "icon": "images/icon.png",
-  "bugs": {
-    "url": "https://github.com/evenaven/discode/issues"
+  "devDependencies": {
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "14.x",
+    "@types/vscode": "^1.60.0",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "eslint": "^7.27.0",
+    "glob": "^7.1.7",
+    "mocha": "^8.4.0",
+    "typescript": "^4.3.2",
+    "vscode-test": "^1.5.2"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/evenaven/discode.git"
+    "url": "https://github.com/barelyaiden/discode.git"
   },
-  "homepage": "https://github.com/evenaven/discode/blob/master/README.md"
+  "dependencies": {
+    "discord-webhook-node": "^1.1.8",
+    "eol": "^0.9.1",
+    "hastebin-save": "^1.2.2"
+  }
 }
