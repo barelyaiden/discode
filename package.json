@@ -4,7 +4,7 @@
   "description": "A Visual Studio Code extension that allows you to share code to Discord with webhooks.",
   "homepage": "https://github.com/barelyaiden/discode/blob/master/README.md",
   "icon": "images/icon.png",
-  "publisher": "barelyaiden",
+  "publisher": "evenaven",
   "version": "2.0.0",
   "bugs": {
     "url": "https://github.com/barelyaiden/discode/issues"
