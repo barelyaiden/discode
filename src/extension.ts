@@ -11,7 +11,8 @@ export async function activate(context: vscode.ExtensionContext) {
 			ignoreFocusOut: true,
 			placeHolder: 'Input a valid Discord webhook link.',
 			validateInput: text => {
-				return text.startsWith('https://discordapp.com/api/webhooks/') || text.startsWith('https://discord.com/api/webhooks/') || text.startsWith('https://canary.discordapp.com/api/webhooks/') || text.startsWith('https://canary.discord.com/api/webhooks/') || text.startsWith('https://ptb.discordapp.com/api/webhooks/') || text.startsWith('https://ptb.discord.com/api/webhooks/') ? null : 'That is not a valid Discord webhook link.';
+				var expr = /(https?):\/\/((?:ptb\.|canary\.)?discord(?:app)?\.com)\/api(?:\/)?(v\d{1,2})?\/webhooks\/(\d{17,19})\/([\w\-]{68})/i;
+				return expr.test(text) ? null : 'That is not a valid Discord webhook link.';
 			}
 		});
 
