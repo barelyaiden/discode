@@ -17,51 +17,95 @@ const hastebin = require('hastebin-save');
 function activate(context) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log('The "Discode" extension has been loaded successfully.');
-        let set = vscode.commands.registerCommand('discode.set', () => __awaiter(this, void 0, void 0, function* () {
-            const webhookInput = yield vscode.window.showInputBox({
-                ignoreFocusOut: true,
-                placeHolder: 'Input a valid Discord webhook link.',
-                validateInput: text => {
-                    return text.startsWith('https://discordapp.com/api/webhooks/') || text.startsWith('https://discord.com/api/webhooks/') || text.startsWith('https://canary.discordapp.com/api/webhooks/') || text.startsWith('https://canary.discord.com/api/webhooks/') || text.startsWith('https://ptb.discordapp.com/api/webhooks/') || text.startsWith('https://ptb.discord.com/api/webhooks/') ? null : 'That is not a valid Discord webhook link.';
+        function setWebhook(count = 1) {
+            return __awaiter(this, void 0, void 0, function* () {
+                const webhookInput = yield vscode.window.showInputBox({
+                    ignoreFocusOut: true,
+                    placeHolder: 'Input a valid Discord webhook link.',
+                    validateInput: text => {
+                        var expr = /(https?):\/\/((?:ptb\.|canary\.)?discord(?:app)?\.com)\/api(?:\/)?(v\d{1,2})?\/webhooks\/(\d{17,19})\/([\w\-]{68})/i;
+                        return expr.test(text) ? null : 'That is not a valid Discord webhook link.';
+                    }
+                });
+                if (count === 1) {
+                    const nameInput = yield vscode.window.showInputBox({
+                        ignoreFocusOut: true,
+                        placeHolder: 'Input a name to show in the embed. Make sure it\'s less than 32 characters.',
+                        validateInput: text => {
+                            return text.length <= 32 ? null : 'That name is too long.';
+                        }
+                    });
+                    const avatarInput = yield vscode.window.showInputBox({
+                        ignoreFocusOut: true,
+                        placeHolder: 'Input an image link to show in the embed as the avatar. Supported formats: png, jpg, gif.',
+                        validateInput: text => {
+                            return text.endsWith('png') || text.endsWith('jpeg') || text.endsWith('jpg') || text.endsWith('gif') ? null : 'That format is not supported.';
+                        }
+                    });
+                    if (webhookInput) {
+                        yield vscode.workspace.getConfiguration('discode').update('webhook', webhookInput, vscode.ConfigurationTarget.Global);
+                        if (nameInput) {
+                            yield vscode.workspace.getConfiguration('discode').update('name', nameInput, vscode.ConfigurationTarget.Global);
+                        }
+                        if (avatarInput) {
+                            yield vscode.workspace.getConfiguration('discode').update('avatar', avatarInput, vscode.ConfigurationTarget.Global);
+                        }
+                    }
                 }
-            });
-            const nameInput = yield vscode.window.showInputBox({
-                ignoreFocusOut: true,
-                placeHolder: 'Input a name to show in the embed. Make sure it\'s less than 32 characters.',
-                validateInput: text => {
-                    return text.length <= 32 ? null : 'That name is too long.';
-                }
-            });
-            const avatarInput = yield vscode.window.showInputBox({
-                ignoreFocusOut: true,
-                placeHolder: 'Input an image link to show in the embed as the avatar. Supported formats: png, jpg, gif.',
-                validateInput: text => {
-                    return text.endsWith('png') || text.endsWith('jpeg') || text.endsWith('jpg') || text.endsWith('gif') ? null : 'That format is not supported.';
-                }
-            });
-            if (webhookInput) {
-                yield vscode.workspace.getConfiguration('discode').update('webhook', webhookInput, vscode.ConfigurationTarget.Global);
-                if (nameInput) {
-                    yield vscode.workspace.getConfiguration('discode').update('name', nameInput, vscode.ConfigurationTarget.Global);
-                }
-                if (avatarInput) {
-                    yield vscode.workspace.getConfiguration('discode').update('avatar', avatarInput, vscode.ConfigurationTarget.Global);
+                else {
+                    if (webhookInput) {
+                        switch (count) {
+                            case 2:
+                                yield vscode.workspace.getConfiguration('discode').update('webhookSecond', webhookInput, vscode.ConfigurationTarget.Global);
+                                break;
+                            case 3:
+                                yield vscode.workspace.getConfiguration('discode').update('webhookThird', webhookInput, vscode.ConfigurationTarget.Global);
+                                break;
+                        }
+                    }
                 }
                 yield vscode.window.showInformationMessage('Successfully set a webhook!');
-            }
-        }));
-        let share = vscode.commands.registerCommand('discode.share', () => __awaiter(this, void 0, void 0, function* () {
-            if (!vscode.workspace.getConfiguration('discode').get('webhook') || !vscode.workspace.getConfiguration('discode').get('name')) {
-                yield vscode.window.showErrorMessage('Discode has not been set up! Please use the "Set a Webhook" command through the Command Palette or configure it in the settings.');
-            }
-            else {
+            });
+        }
+        function shareCode(count = 1) {
+            return __awaiter(this, void 0, void 0, function* () {
+                const errorMessage = 'Discode has not been set up! You may be missing a name or avatar. Please use the "Set a Webhook" command through the Command Palette or configure it manually in the settings.';
+                switch (count) {
+                    case 1:
+                        if (!vscode.workspace.getConfiguration('discode').get('webhook') || !vscode.workspace.getConfiguration('discode').get('name')) {
+                            return vscode.window.showErrorMessage(errorMessage);
+                        }
+                        break;
+                    case 2:
+                        if (!vscode.workspace.getConfiguration('discode').get('webhookSecond') || !vscode.workspace.getConfiguration('discode').get('name')) {
+                            return vscode.window.showErrorMessage(errorMessage);
+                        }
+                        break;
+                    case 3:
+                        if (!vscode.workspace.getConfiguration('discode').get('webhookThird') || !vscode.workspace.getConfiguration('discode').get('name')) {
+                            return vscode.window.showErrorMessage(errorMessage);
+                        }
+                        break;
+                }
                 const editor = vscode.window.activeTextEditor;
                 if (editor) {
                     const document = editor.document;
                     const selection = editor.selection;
                     const text = document.getText(selection);
+                    let currentHook;
+                    switch (count) {
+                        case 1:
+                            currentHook = `${vscode.workspace.getConfiguration('discode').get('webhook')}`;
+                            break;
+                        case 2:
+                            currentHook = `${vscode.workspace.getConfiguration('discode').get('webhookSecond')}`;
+                            break;
+                        case 3:
+                            currentHook = `${vscode.workspace.getConfiguration('discode').get('webhookThird')}`;
+                            break;
+                    }
                     const hook = new discord_webhook_node_1.Webhook({
-                        url: `${vscode.workspace.getConfiguration('discode').get('webhook')}`,
+                        url: currentHook,
                         retryOnLimit: false
                     });
                     const whitespaceAmount = text.length - text.trimLeft().length;
@@ -123,10 +167,32 @@ function activate(context) {
                         }
                     }
                 }
-            }
+            });
+        }
+        let set = vscode.commands.registerCommand('discode.set', () => __awaiter(this, void 0, void 0, function* () {
+            yield setWebhook(1);
+        }));
+        let setSecond = vscode.commands.registerCommand('discode.setSecond', () => __awaiter(this, void 0, void 0, function* () {
+            yield setWebhook(2);
+        }));
+        let setThird = vscode.commands.registerCommand('discode.setThird', () => __awaiter(this, void 0, void 0, function* () {
+            yield setWebhook(3);
+        }));
+        let share = vscode.commands.registerCommand('discode.share', () => __awaiter(this, void 0, void 0, function* () {
+            yield shareCode(1);
+        }));
+        let shareSecond = vscode.commands.registerCommand('discode.shareSecond', () => __awaiter(this, void 0, void 0, function* () {
+            yield shareCode(2);
+        }));
+        let shareThird = vscode.commands.registerCommand('discode.shareThird', () => __awaiter(this, void 0, void 0, function* () {
+            yield shareCode(3);
         }));
         context.subscriptions.push(set);
+        context.subscriptions.push(setSecond);
+        context.subscriptions.push(setThird);
         context.subscriptions.push(share);
+        context.subscriptions.push(shareSecond);
+        context.subscriptions.push(shareThird);
     });
 }
 exports.activate = activate;

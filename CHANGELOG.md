@@ -1,3 +1,8 @@
+## Release 2.0.1
+
+- Added additional two webhook slots.
+- Removed the "Community Projects" section from the README.
+
 ## Release 2.0.0
 
 - Major code and file restructuring.
